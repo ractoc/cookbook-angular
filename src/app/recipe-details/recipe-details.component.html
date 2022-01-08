@@ -1,0 +1,34 @@
+<section fxLayout="column" fxFlexAlign="stretch">
+  <app-sub-header [subTitle]="subTitle"></app-sub-header>
+  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipeForm; else loading">
+    <form class="form" [formGroup]="recipeForm">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name
+          <mat-icon matSuffix>priority_high</mat-icon>
+        </mat-label>
+        <input matInput formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <div class="buttons">
+        <button mat-stroked-button (click)="cancel()" *ngIf="editing && this.recipe">
+          <mat-icon aria-label="cancel">clear</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="saveRecipe()" [disabled]="!recipeForm.valid" *ngIf="editing">
+          <mat-icon aria-label="save">check</mat-icon>
+        </button>
+        <button (click)="editRecipe()" *ngIf="!editing" mat-stroked-button>
+          <mat-icon aria-label="edit">create</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<ng-template #loading>
+  <div fxFlexAlign="center" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

@@ -19,6 +19,10 @@ import {NavSidebarComponent} from "./nav-sidebar/nav-sidebar.component";
 import {HomeComponent} from './home/home.component';
 import {LayoutComponent} from './layout/layout.component';
 import {RoutingModule} from "./routing/routing.module";
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { SubHeaderComponent } from './sub-header/sub-header.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import {RoutingModule} from "./routing/routing.module";
     HomeComponent,
     LayoutComponent,
     NavSidebarComponent,
-    NavSidebarComponent
+    NavSidebarComponent,
+    RecipeDetailsComponent,
+    SubHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,9 @@ import {RoutingModule} from "./routing/routing.module";
     FlexLayoutModule,
     MatSidenavModule,
     RoutingModule,
-    MatListModule
+    MatListModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
