@@ -1,0 +1,22 @@
+<section fxLayout="column" fxFlexAlign="stretch">
+  <div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-form-field class="search-form">
+      <input matInput placeholder="Search Picture" type="text">
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">Search</button>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+    <mat-card class="card-picture" *ngFor="let recipe of recipes">
+      <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+        <span fxFlex="80%">{{recipe.name}}</span>
+        <mat-icon fxFlex="10%">mode_edit</mat-icon>
+        <mat-icon fxFlex="10%">delete</mat-icon>
+      </mat-card-title>
+      <img alt="{{recipe.name}}" mat-card-image [src]="recipe.imageLink">
+    </mat-card>
+  </div>
+</section>
+
+
+
