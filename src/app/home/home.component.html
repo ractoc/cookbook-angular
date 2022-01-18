@@ -1,10 +1,14 @@
 <section fxLayout="column" fxFlexAlign="stretch">
-  <div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-    <mat-form-field class="search-form">
-      <input matInput placeholder="Search Picture" type="text">
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">Search</button>
-  </div>
+  <form class="form" [formGroup]="searchForm">
+    <div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+      <mat-form-field class="search-form">
+        <input matInput placeholder="Search Picture" formControlName="searchString" type="text">
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="searchDisabled()" (click)="searchRecipes()">
+        Search
+      </button>
+    </div>
+  </form>
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
     <mat-card class="card-picture" *ngFor="let recipe of recipes">

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Recipe} from "../services/model/recipe";
+import {RecipeService} from "../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -30,8 +31,10 @@ export class RecipeDetailsComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private recipeService: RecipeService
+  ) {
+  }
 
   ngOnInit(): void {
     this.routeListener$ = this.route.params
@@ -65,12 +68,11 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   saveRecipe() {
-    let recipe: Recipe = {
+    this.recipeService.saveRecipe({
       id: this.recipeForm.value.id,
       name: this.recipeForm.value.name,
       description: this.recipeForm.value.description,
-    };
-    console.log('saving recipe', recipe);
+    });
   }
 
   private static loadRecipe(recipeId: number) {
