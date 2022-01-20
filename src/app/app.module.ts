@@ -23,6 +23,7 @@ import { RecipeDetailsComponent } from './recipe-details/recipe-details.componen
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatCardModule,
     MatIconModule,
     MatToolbarModule,

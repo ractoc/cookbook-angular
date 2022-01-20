@@ -72,7 +72,10 @@ export class RecipeDetailsComponent implements OnInit {
       id: this.recipeForm.value.id,
       name: this.recipeForm.value.name,
       description: this.recipeForm.value.description,
-    });
+    }).subscribe(
+      (recipe: Recipe) => console.log('recipe', recipe),
+      error => console.log('error', error)
+    );
   }
 
   private static loadRecipe(recipeId: number) {
