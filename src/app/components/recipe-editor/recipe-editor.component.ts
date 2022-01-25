@@ -1,20 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Recipe} from "../services/model/recipe";
-import {RecipeService} from "../services/recipe.service";
+import {RecipeModel} from "../../api/cookbook/models/recipe-model";
+import {RecipeService} from "../../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-edit',
-  templateUrl: './recipe-details.component.html',
-  styleUrls: ['./recipe-details.component.css']
+  templateUrl: './recipe-editor.component.html',
+  styleUrls: ['./recipe-editor.component.css']
 })
-export class RecipeDetailsComponent implements OnInit {
+export class RecipeEditorComponent implements OnInit, OnDestroy {
 
   subTitle: String | undefined;
-  editing: boolean = false;
-  recipe: Recipe | undefined;
+  recipe: RecipeModel | undefined;
 
   private routeListener$: Subscription | undefined;
 
@@ -30,6 +29,21 @@ export class RecipeDetailsComponent implements OnInit {
     image: new FormControl(),
   });
 
+  recipeObserver = {
+    parent: this,
+    next(recipeData: RecipeModel) {
+      console.log('Recipe', recipeData);
+      this.parent.recipe = recipeData;
+      this.parent.initRecipeForm();
+    },
+    error(error: any) {
+      // TODO Implement error handling
+      console.error('error', error);
+    },
+    complete() {
+    }
+  };
+
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService
@@ -40,29 +54,23 @@ export class RecipeDetailsComponent implements OnInit {
     this.routeListener$ = this.route.params
       .subscribe((params: any) => {
           if (params.id) {
-            this.subTitle = 'Recipe Details';
-            RecipeDetailsComponent.loadRecipe(params.id);
+            this.loadRecipe(params.id);
+            this.subTitle = 'Update Recipe';
           } else {
             this.recipe = undefined;
+            this.subTitle = 'New Recipe';
             this.initRecipeForm();
           }
         }
       );
   }
 
-  editRecipe() {
-    this.recipeForm.controls['name'].enable();
-    this.editing = true;
-    if (this.recipe) {
-      this.subTitle = 'Update Recipe';
-    } else {
-      this.subTitle = 'New Recipe';
-    }
+  ngOnDestroy() {
+    this.routeListener$?.unsubscribe();
   }
 
   cancel() {
     if (this.recipe) {
-      this.subTitle = 'Recipe Details';
       this.initRecipeForm();
     }
   }
@@ -72,28 +80,18 @@ export class RecipeDetailsComponent implements OnInit {
       id: this.recipeForm.value.id,
       name: this.recipeForm.value.name,
       description: this.recipeForm.value.description,
-    }).subscribe(
-      (recipe: Recipe) => console.log('recipe', recipe),
-      error => console.log('error', error)
-    );
+    }).subscribe(this.recipeObserver);
   }
 
-  private static loadRecipe(recipeId: number) {
-    console.log('loading recipe: ' + recipeId);
+  private loadRecipe(recipeId: number) {
+    this.recipeService.loadRecipe(recipeId).subscribe(this.recipeObserver);
   }
 
   private initRecipeForm() {
     if (this.recipe) {
       this.recipeForm.controls['id'].setValue(this.recipe.id);
       this.recipeForm.controls['name'].setValue(this.recipe.name);
-      this.recipeForm.controls['name'].disable();
       this.recipeForm.controls['description'].setValue(this.recipe.description);
-      this.recipeForm.controls['description'].disable();
-
-      this.subTitle = 'Recipe Details';
-      this.editing = false;
-    } else {
-      this.editRecipe();
     }
   }
 }

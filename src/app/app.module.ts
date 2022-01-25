@@ -13,17 +13,20 @@ import {MatListModule} from "@angular/material/list";
 
 import {FlexLayoutModule} from "@angular/flex-layout";
 
+import {ApiModule as CookbookApiModule} from "./api/cookbook/api.module";
+
 import {AppComponent} from './app.component';
-import {NavToolbarComponent} from './nav-toolbar/nav-toolbar.component';
-import {NavSidebarComponent} from "./nav-sidebar/nav-sidebar.component";
-import {HomeComponent} from './home/home.component';
 import {LayoutComponent} from './layout/layout.component';
 import {RoutingModule} from "./routing/routing.module";
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
-import { SubHeaderComponent } from './sub-header/sub-header.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HttpClientModule} from "@angular/common/http";
+import {NavToolbarComponent} from "./components/nav-toolbar/nav-toolbar.component";
+import {NavSidebarComponent} from "./components/nav-sidebar/nav-sidebar.component";
+import {HomeComponent} from "./components/home/home.component";
+import {SubHeaderComponent} from "./components/sub-header/sub-header.component";
+import {RecipeEditorComponent} from "./components/recipe-editor/recipe-editor.component";
+import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +36,15 @@ import {HttpClientModule} from "@angular/common/http";
     LayoutComponent,
     NavSidebarComponent,
     NavSidebarComponent,
-    RecipeDetailsComponent,
-    SubHeaderComponent
+    RecipeEditorComponent,
+    SubHeaderComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    CookbookApiModule.forRoot({ rootUrl: 'http://localhost:8080/api' }),
     MatCardModule,
     MatIconModule,
     MatToolbarModule,

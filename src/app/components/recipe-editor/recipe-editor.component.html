@@ -13,14 +13,11 @@
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
       <div class="buttons">
-        <button mat-stroked-button (click)="cancel()" *ngIf="editing && this.recipe">
+        <button mat-stroked-button (click)="cancel()" *ngIf="this.recipe">
           <mat-icon aria-label="cancel">clear</mat-icon>
         </button>
-        <button mat-stroked-button (click)="saveRecipe()" [disabled]="!recipeForm.valid" *ngIf="editing">
+        <button mat-stroked-button (click)="saveRecipe()" [disabled]="!recipeForm.valid">
           <mat-icon aria-label="save">check</mat-icon>
-        </button>
-        <button (click)="editRecipe()" *ngIf="!editing" mat-stroked-button>
-          <mat-icon aria-label="edit">create</mat-icon>
         </button>
       </div>
     </form>

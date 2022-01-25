@@ -1,31 +1,33 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, of, throwError} from "rxjs";
-import {Recipe} from "./model/recipe";
+import {catchError, Observable, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {RecipeControllerService} from "../api/cookbook/services/recipe-controller.service";
+import {RecipeModel} from "../api/cookbook/models/recipe-model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
 
-  recipes: Recipe[] = [];
-
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private recipeController: RecipeControllerService) {
   }
 
-  findRecipes(searchString: string): Observable<Recipe[]> {
-    console.log('searchString', searchString);
-    return of(this.recipes.filter(r => {
-      console.log('r', r);
-      if (searchString && searchString.trim()) {
-        return r.name.toLowerCase().includes(searchString.toLowerCase());
-      }
-      return r;
-    }));
+  findRecipes(searchString: string): Observable<RecipeModel[]> {
+    return this.recipeController.findAllRecipes({searchString: searchString})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
   }
 
-  saveRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.httpClient.post<Recipe>("http://localhost:8080/api/recipe/", recipe)
+  loadRecipe(recipeId: number): Observable<RecipeModel> {
+    return this.recipeController.findRecipeById({id: recipeId})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
+  saveRecipe(recipe: RecipeModel): Observable<RecipeModel> {
+    return this.recipeController.saveRecipe({body: recipe})
       .pipe(
         catchError(RecipeService.handleError)
       );
@@ -45,4 +47,5 @@ export class RecipeService {
     return throwError(
       () => 'Something bad happened; please try again later.');
   }
+
 }
