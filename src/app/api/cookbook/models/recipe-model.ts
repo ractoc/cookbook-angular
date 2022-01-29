@@ -3,6 +3,6 @@
 export interface RecipeModel {
   description?: string;
   id?: number;
-  imageUrl?: string;
+  imageFileName?: string;
   name?: string;
 }

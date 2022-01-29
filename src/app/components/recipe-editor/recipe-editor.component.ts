@@ -83,9 +83,9 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     }).subscribe(this.recipeObserver);
   }
 
-  onFileSelected(event:any) {
+  onFileSelected(event: any) {
     console.log('file selected', event);
-    const file:File = event.target.files[0];
+    const file: File = event.target.files[0];
     if (this.recipe?.id && file) {
       this.recipeService.uploadImage(this.recipe.id, file).subscribe(this.recipeObserver);
     }
@@ -101,5 +101,9 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
       this.recipeForm.controls['name'].setValue(this.recipe.name);
       this.recipeForm.controls['description'].setValue(this.recipe.description);
     }
+  }
+
+  getImageUrl(recipe: RecipeModel) {
+    return this.recipeService.getImageUrl(recipe);
   }
 }

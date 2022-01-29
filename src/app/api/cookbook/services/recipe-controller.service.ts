@@ -177,7 +177,7 @@ export class RecipeControllerService extends BaseService {
    */
   uploadImage$Response(params: {
     id: number;
-    body?: {
+    body: {
 'file': Blob;
 }
   }): Observable<StrictHttpResponse<RecipeModel>> {
@@ -207,7 +207,7 @@ export class RecipeControllerService extends BaseService {
    */
   uploadImage(params: {
     id: number;
-    body?: {
+    body: {
 'file': Blob;
 }
   }): Observable<RecipeModel> {

@@ -144,7 +144,8 @@
                 }
               }
             }
-          }
+          },
+          "required": true
         },
         "responses": {
           "200": {
@@ -268,7 +269,7 @@
           "description": {
             "type": "string"
           },
-          "imageUrl": {
+          "imageFileName": {
             "type": "string"
           }
         }
@@ -283,7 +284,7 @@
           "name": {
             "type": "string"
           },
-          "imageUrl": {
+          "imageFileName": {
             "type": "string"
           }
         }

@@ -2,6 +2,6 @@
 /* eslint-disable */
 export interface SimpleRecipeModel {
   id?: number;
-  imageUrl?: string;
+  imageFileName?: string;
   name?: string;
 }

@@ -18,7 +18,7 @@
         <button aria-label="edit recipe" [routerLink]="'/recipe/edit/' + recipe.id"><mat-icon fxFlex="10%">mode_edit</mat-icon></button>
         <!--        <mat-icon fxFlex="10%">delete</mat-icon>-->
       </mat-card-title>
-      <img *ngIf="recipe.imageUrl" alt="{{recipe.name}}" mat-card-image [src]="recipe.imageUrl">
+      <img *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image [src]="this.getImageUrl(recipe)">
       <mat-card-content *ngIf="recipe.description">
         {{recipe.description}}
       </mat-card-content>

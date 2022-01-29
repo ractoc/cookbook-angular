@@ -44,4 +44,8 @@ export class HomeComponent implements OnInit {
   searchDisabled() {
     return !this.searchForm.value.searchString || this.searchForm.value.searchString.trim().length < 4;
   }
+
+  getImageUrl(recipe: RecipeModel) {
+    return this.recipeService.getImageUrl(recipe);
+  }
 }

@@ -23,11 +23,11 @@
     </form>
   </div>
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
-    <img src="{{recipe.imageUrl}}" *ngIf="recipe && recipe.imageUrl"/>
+    <img [alt]="recipe.imageFileName" src="{{this.getImageUrl(recipe)}}" *ngIf="recipe && recipe.imageFileName"/>
     <input type="file" class="file-input"
            (change)="onFileSelected($event)" #fileUpload>
     <div class="file-upload">
-      <span *ngIf="recipe && !recipe.imageUrl">No file selected yet.</span>
+      <span *ngIf="recipe && !recipe.imageFileName">No file selected yet.</span>
       <button mat-mini-fab color="primary" class="upload-btn"
               (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>

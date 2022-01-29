@@ -40,6 +40,14 @@ export class RecipeService {
       );
   }
 
+  getImageUrl(recipe: RecipeModel) {
+    if (recipe.imageFileName) {
+      return this.recipeController.rootUrl + "/recipe/downloadImage/" + recipe.imageFileName;
+    } else {
+      return undefined;
+    }
+  }
+
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
