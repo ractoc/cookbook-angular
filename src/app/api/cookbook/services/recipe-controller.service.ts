@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { RecipeModel } from '../models/recipe-model';
+import { SimpleRecipeModel } from '../models/simple-recipe-model';
 
 @Injectable({
   providedIn: 'root',
@@ -164,6 +165,59 @@ export class RecipeControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation uploadImage
+   */
+  static readonly UploadImagePath = '/recipe/{id}/uploadImage';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `uploadImage()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadImage$Response(params: {
+    id: number;
+    body?: {
+'file': Blob;
+}
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.UploadImagePath, 'post');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'multipart/form-data');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'blob',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `uploadImage$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadImage(params: {
+    id: number;
+    body?: {
+'file': Blob;
+}
+  }): Observable<RecipeModel> {
+
+    return this.uploadImage$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
    * Path part for operation findAllRecipes
    */
   static readonly FindAllRecipesPath = '/recipe/';
@@ -176,7 +230,7 @@ export class RecipeControllerService extends BaseService {
    */
   findAllRecipes$Response(params: {
     searchString: string;
-  }): Observable<StrictHttpResponse<Array<RecipeModel>>> {
+  }): Observable<StrictHttpResponse<Array<SimpleRecipeModel>>> {
 
     const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.FindAllRecipesPath, 'get');
     if (params) {
@@ -189,7 +243,7 @@ export class RecipeControllerService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<RecipeModel>>;
+        return r as StrictHttpResponse<Array<SimpleRecipeModel>>;
       })
     );
   }
@@ -202,10 +256,10 @@ export class RecipeControllerService extends BaseService {
    */
   findAllRecipes(params: {
     searchString: string;
-  }): Observable<Array<RecipeModel>> {
+  }): Observable<Array<SimpleRecipeModel>> {
 
     return this.findAllRecipes$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<RecipeModel>>) => r.body as Array<RecipeModel>)
+      map((r: StrictHttpResponse<Array<SimpleRecipeModel>>) => r.body as Array<SimpleRecipeModel>)
     );
   }
 
@@ -252,6 +306,52 @@ export class RecipeControllerService extends BaseService {
 
     return this.saveRecipe$Response(params).pipe(
       map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
+   * Path part for operation downloadFile
+   */
+  static readonly DownloadFilePath = '/recipe/downloadImage/{fileName}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `downloadFile()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  downloadFile$Response(params: {
+    fileName: string;
+  }): Observable<StrictHttpResponse<Blob>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.DownloadFilePath, 'get');
+    if (params) {
+      rb.path('fileName', params.fileName, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'blob',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Blob>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `downloadFile$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  downloadFile(params: {
+    fileName: string;
+  }): Observable<Blob> {
+
+    return this.downloadFile$Response(params).pipe(
+      map((r: StrictHttpResponse<Blob>) => r.body as Blob)
     );
   }
 

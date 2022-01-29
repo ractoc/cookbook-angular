@@ -83,6 +83,14 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     }).subscribe(this.recipeObserver);
   }
 
+  onFileSelected(event:any) {
+    console.log('file selected', event);
+    const file:File = event.target.files[0];
+    if (this.recipe?.id && file) {
+      this.recipeService.uploadImage(this.recipe.id, file).subscribe(this.recipeObserver);
+    }
+  }
+
   private loadRecipe(recipeId: number) {
     this.recipeService.loadRecipe(recipeId).subscribe(this.recipeObserver);
   }

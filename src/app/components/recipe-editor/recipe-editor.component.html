@@ -22,6 +22,18 @@
       </div>
     </form>
   </div>
+  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
+    <img src="{{recipe.imageUrl}}" *ngIf="recipe && recipe.imageUrl"/>
+    <input type="file" class="file-input"
+           (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+      <span *ngIf="recipe && !recipe.imageUrl">No file selected yet.</span>
+      <button mat-mini-fab color="primary" class="upload-btn"
+              (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+    </div>
+  </div>
 </section>
 
 <ng-template #loading>

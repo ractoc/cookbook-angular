@@ -111,6 +111,55 @@
         }
       }
     },
+    "/recipe/{id}/uploadImage": {
+      "post": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "uploadImage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/": {
       "get": {
         "tags": [
@@ -135,7 +184,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RecipeModel"
+                    "$ref": "#/components/schemas/SimpleRecipeModel"
                   }
                 }
               }
@@ -171,6 +220,37 @@
           }
         }
       }
+    },
+    "/recipe/downloadImage/{fileName}": {
+      "get": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -186,6 +266,21 @@
             "type": "string"
           },
           "description": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "SimpleRecipeModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
             "type": "string"
           },
           "imageUrl": {

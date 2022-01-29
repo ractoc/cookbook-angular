@@ -33,6 +33,13 @@ export class RecipeService {
       );
   }
 
+  uploadImage(recipeId: number, imageFile: File): Observable<RecipeModel> {
+    return this.recipeController.uploadImage({id: recipeId, body: {file: imageFile}})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
   private static handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -47,5 +54,4 @@ export class RecipeService {
     return throwError(
       () => 'Something bad happened; please try again later.');
   }
-
 }
