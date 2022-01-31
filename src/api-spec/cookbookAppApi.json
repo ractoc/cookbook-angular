@@ -284,6 +284,9 @@
           "name": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "imageFileName": {
             "type": "string"
           }
