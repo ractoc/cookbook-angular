@@ -1,0 +1,35 @@
+<section fxLayout="column" fxFlexAlign="stretch">
+  <app-sub-header [subTitle]="subTitle"></app-sub-header>
+  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="ingredientForm; else loading">
+    <form class="form" [formGroup]="ingredientForm">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name
+          <mat-icon matSuffix>priority_high</mat-icon>
+        </mat-label>
+        <input matInput formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Measurement Type</mat-label>
+        <select matNativeControl required>
+          <option *ngFor="let measurementType of measurementTypes" [ngValue]="measurementType">
+            {{ measurementType }}
+          </option>
+        </select>
+      </mat-form-field>
+      <div class="buttons">
+        <button mat-stroked-button (click)="cancel()">
+          <mat-icon aria-label="cancel">clear</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="saveIngredient()" [disabled]="!ingredientForm.valid">
+          <mat-icon aria-label="save">check</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<ng-template #loading>
+  <div fxFlexAlign="center" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

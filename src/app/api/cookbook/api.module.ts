@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { RecipeControllerService } from './services/recipe-controller.service';
+import { IngredientControllerService } from './services/ingredient-controller.service';
 
 /**
  * Module that provides all services and configuration.
@@ -15,6 +16,7 @@ import { RecipeControllerService } from './services/recipe-controller.service';
   declarations: [],
   providers: [
     RecipeControllerService,
+    IngredientControllerService,
     ApiConfiguration
   ],
 })

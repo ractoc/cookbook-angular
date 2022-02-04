@@ -23,28 +23,38 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HttpClientModule} from "@angular/common/http";
 import {NavToolbarComponent} from "./components/nav-toolbar/nav-toolbar.component";
 import {NavSidebarComponent} from "./components/nav-sidebar/nav-sidebar.component";
-import {HomeComponent} from "./components/home/home.component";
 import {SubHeaderComponent} from "./components/sub-header/sub-header.component";
-import {RecipeEditorComponent} from "./components/recipe-editor/recipe-editor.component";
-import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import {RecipeEditorComponent} from "./components/recipe/recipe-editor/recipe-editor.component";
+import {RecipeDetailsComponent} from "./components/recipe/recipe-details/recipe-details.component";
+import {environment} from "../environments/environment";
+import { IngredientEditorComponent } from './components/ingredient/ingredient-editor/ingredient-editor.component';
+import { IngredientDetailsComponent } from './components/ingredient/ingredient-details/ingredient-details.component';
+import { IngredientListComponent } from './components/ingredient/ingredient-list/ingredient-list.component';
+import {RecipeListComponent} from "./components/recipe/recipe-list/recipe-list.component";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavToolbarComponent,
-    HomeComponent,
+    RecipeListComponent,
     LayoutComponent,
     NavSidebarComponent,
     NavSidebarComponent,
     RecipeEditorComponent,
+    RecipeDetailsComponent,
     SubHeaderComponent,
-    RecipeDetailsComponent
+    IngredientEditorComponent,
+    IngredientDetailsComponent,
+    IngredientListComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CookbookApiModule.forRoot({ rootUrl: 'http://localhost:8080/api' }),
+    CookbookApiModule.forRoot({rootUrl: environment.endpointBaseUri}),
     MatCardModule,
     MatIconModule,
     MatToolbarModule,
@@ -56,7 +66,10 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
     RoutingModule,
     MatListModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

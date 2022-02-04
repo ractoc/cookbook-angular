@@ -13,7 +13,7 @@
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
       <div class="buttons">
-        <button mat-stroked-button (click)="cancel()" *ngIf="this.recipe">
+        <button mat-stroked-button (click)="cancel()">
           <mat-icon aria-label="cancel">clear</mat-icon>
         </button>
         <button mat-stroked-button (click)="saveRecipe()" [disabled]="!recipeForm.valid">

@@ -1,0 +1,39 @@
+<section fxLayout="column" fxFlexAlign="stretch">
+  <form class="form" [formGroup]="searchForm">
+    <div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+      <mat-form-field class="search-form">
+        <input matInput placeholder="Search Picture" formControlName="searchString" type="text">
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="searchDisabled()" (click)="searchIngredients()">
+        Search
+      </button>
+    </div>
+  </form>
+  <table mat-table [dataSource]="ingredients" class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <!-- measurementType Column -->
+    <ng-container matColumnDef="measurementType">
+      <th mat-header-cell *matHeaderCellDef> Measurement Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.measurementType}} </td>
+    </ng-container>
+    <!-- actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button aria-label="edit recipe" [routerLink]="'/ingredient/edit/' + element.id">
+          <mat-icon fxFlex="10%">mode_edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of ingredients">
+  </mat-paginator>
+</section>

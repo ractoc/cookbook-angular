@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {RecipeModel} from "../../api/cookbook/models/recipe-model";
-import {RecipeService} from "../../services/recipe.service";
+import {RecipeModel} from "../../../api/cookbook/models/recipe-model";
+import {RecipeService} from "../../../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -32,7 +32,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   recipeObserver = {
     parent: this,
     next(recipeData: RecipeModel) {
-      console.log('Recipe', recipeData);
+      this.parent.subTitle = 'Update Recipe';
       this.parent.recipe = recipeData;
       this.parent.initRecipeForm();
     },
@@ -46,6 +46,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private recipeService: RecipeService
   ) {
   }
@@ -73,6 +74,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     if (this.recipe) {
       this.initRecipeForm();
     }
+    this.router.navigateByUrl('/home');
   }
 
   saveRecipe() {

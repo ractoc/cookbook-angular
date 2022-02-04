@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {RecipeService} from "../../services/recipe.service";
-import {RecipeModel} from "../../api/cookbook/models/recipe-model";
+import {RecipeModel} from "../../../api/cookbook/models/recipe-model";
+import {RecipeService} from "../../../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-details',

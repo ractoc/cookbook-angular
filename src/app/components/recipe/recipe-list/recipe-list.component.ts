@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {RecipeModel} from "../../api/cookbook/models/recipe-model";
-import {RecipeService} from "../../services/recipe.service";
+import {RecipeModel} from "../../../api/cookbook/models/recipe-model";
+import {RecipeService} from "../../../services/recipe.service";
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './recipe-list.component.html',
+  styleUrls: ['./recipe-list.component.css']
 })
-export class HomeComponent implements OnInit {
+export class RecipeListComponent implements OnInit {
 
   recipes!: RecipeModel[];
 

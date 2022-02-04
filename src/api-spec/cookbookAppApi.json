@@ -111,6 +111,106 @@
         }
       }
     },
+    "/ingredient/{id}": {
+      "get": {
+        "tags": [
+          "ingredient-controller"
+        ],
+        "operationId": "findIngredientById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngredientModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ingredient-controller"
+        ],
+        "operationId": "updateIngredient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngredientModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngredientModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ingredient-controller"
+        ],
+        "operationId": "deleteIngredient",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/{id}/uploadImage": {
       "post": {
         "tags": [
@@ -222,6 +322,67 @@
         }
       }
     },
+    "/ingredient/": {
+      "get": {
+        "tags": [
+          "ingredient-controller"
+        ],
+        "operationId": "findAllIngredients",
+        "parameters": [
+          {
+            "name": "searchString",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngredientModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ingredient-controller"
+        ],
+        "operationId": "saveIngredient",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngredientModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngredientModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/downloadImage/{fileName}": {
       "get": {
         "tags": [
@@ -271,6 +432,28 @@
           },
           "imageFileName": {
             "type": "string"
+          }
+        }
+      },
+      "IngredientModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "measurementType": {
+            "type": "string",
+            "enum": [
+              "GRAM",
+              "TEASPOON",
+              "TABLESPOON",
+              "PIECE",
+              "PINCH"
+            ]
           }
         }
       },
