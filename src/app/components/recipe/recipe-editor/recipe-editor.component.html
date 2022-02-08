@@ -1,5 +1,6 @@
 <section fxLayout="column" fxFlexAlign="stretch">
   <app-sub-header [subTitle]="subTitle"></app-sub-header>
+  <!-- reciy meta data -->
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipeForm; else loading">
     <form class="form" [formGroup]="recipeForm">
       <mat-form-field appearance="fill" class="full-width">
@@ -22,6 +23,7 @@
       </div>
     </form>
   </div>
+  <!-- upload image -->
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
     <img [alt]="recipe.imageFileName" src="{{this.getImageUrl(recipe)}}" *ngIf="recipe && recipe.imageFileName"/>
     <input type="file" class="file-input"
@@ -33,6 +35,60 @@
         <mat-icon>attach_file</mat-icon>
       </button>
     </div>
+  </div>
+  <!-- add new ingredient -->
+  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
+    <form class="form" [formGroup]="ingredientForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Add Ingredient</mat-label>
+        <input type="text"
+               matInput
+               formControlName="ingredient"
+               [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayIngredient">
+          <mat-option *ngFor="let option of filteredIngredients | async" [value]="option">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="mat-column-amount" appearance="fill" *ngIf="ingredientForm.value.ingredient">
+        <input type="number" matInput formControlName="amount"/>
+      </mat-form-field>
+      <span class="mat-column-amount" *ngIf="ingredientForm.value.ingredient">
+        {{ingredientForm.value.ingredient.measurementType}}
+      </span>
+      <div class="buttons">
+        <button aria-label="add ingredient" (click)="addIngredient()" *ngIf="ingredientForm.value.ingredient">
+          <mat-icon fxFlex="10%">add_circle_outline</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- diplay current ingredients -->
+  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
+    <table mat-table [dataSource]="ingredients" class="mat-elevation-z8" *ngIf="ingredients && ingredients.length">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.ingredient.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} {{element.ingredient.amountType}} </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" fxLayout="row">
+          <button aria-label="edit ingredient" (click)="editIngredient(element)">
+            <mat-icon fxFlex="10%">mode_edit</mat-icon>
+          </button>
+          <button aria-label="remove ingredient" (click)="removeIngredient(element)">
+            <mat-icon fxFlex="10%">delete_outline</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
   </div>
 </section>
 

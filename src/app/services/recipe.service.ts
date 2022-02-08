@@ -33,6 +33,29 @@ export class RecipeService {
       );
   }
 
+  addIngredient(recipeId: number, ingredientId: number, amount: number): Observable<RecipeModel> {
+    const requestParams = {
+      recipeId: recipeId,
+      ingredientId: ingredientId,
+      amount
+    }
+    return this.recipeController.addOrUpdateIngredient(requestParams)
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
+  removeIngredient(recipeId: number, ingredientId: number): Observable<RecipeModel> {
+    const requestParams = {
+      recipeId: recipeId,
+      ingredientId: ingredientId
+    }
+    return this.recipeController.removeIngredient(requestParams)
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
   uploadImage(recipeId: number, imageFile: File): Observable<RecipeModel> {
     return this.recipeController.uploadImage({id: recipeId, body: {file: imageFile}})
       .pipe(

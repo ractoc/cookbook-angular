@@ -26,3 +26,7 @@
 .file-input {
   display: none;
 }
+
+.mat-column-amount, .mat-column-actions {
+  padding-left: 16px;
+}

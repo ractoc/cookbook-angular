@@ -211,6 +211,93 @@
         }
       }
     },
+    "/recipe/{recipeId}/ingredient/{ingredientId}": {
+      "post": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "addOrUpdateIngredient",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "removeIngredient",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/{id}/uploadImage": {
       "post": {
         "tags": [
@@ -417,25 +504,11 @@
   },
   "components": {
     "schemas": {
-      "RecipeModel": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "imageFileName": {
-            "type": "string"
-          }
-        }
-      },
       "IngredientModel": {
+        "required": [
+          "measurementType",
+          "name"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -454,6 +527,47 @@
               "PIECE",
               "PINCH"
             ]
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RecipeIngredientModel": {
+        "type": "object",
+        "properties": {
+          "ingredient": {
+            "$ref": "#/components/schemas/IngredientModel"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RecipeModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageFileName": {
+            "type": "string"
+          },
+          "recipeIngredients": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeIngredientModel"
+            }
           }
         }
       },

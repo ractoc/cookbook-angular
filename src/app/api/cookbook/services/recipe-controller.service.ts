@@ -165,6 +165,107 @@ export class RecipeControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation addOrUpdateIngredient
+   */
+  static readonly AddOrUpdateIngredientPath = '/recipe/{recipeId}/ingredient/{ingredientId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `addOrUpdateIngredient()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  addOrUpdateIngredient$Response(params: {
+    recipeId: number;
+    ingredientId: number;
+    amount: number;
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.AddOrUpdateIngredientPath, 'post');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.path('ingredientId', params.ingredientId, {});
+      rb.query('amount', params.amount, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `addOrUpdateIngredient$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  addOrUpdateIngredient(params: {
+    recipeId: number;
+    ingredientId: number;
+    amount: number;
+  }): Observable<RecipeModel> {
+
+    return this.addOrUpdateIngredient$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
+   * Path part for operation removeIngredient
+   */
+  static readonly RemoveIngredientPath = '/recipe/{recipeId}/ingredient/{ingredientId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `removeIngredient()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeIngredient$Response(params: {
+    recipeId: number;
+    ingredientId: number;
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.RemoveIngredientPath, 'delete');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.path('ingredientId', params.ingredientId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `removeIngredient$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeIngredient(params: {
+    recipeId: number;
+    ingredientId: number;
+  }): Observable<RecipeModel> {
+
+    return this.removeIngredient$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
    * Path part for operation uploadImage
    */
   static readonly UploadImagePath = '/recipe/{id}/uploadImage';

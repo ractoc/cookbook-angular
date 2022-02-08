@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {IngredientControllerService} from "../api/cookbook/services/ingredient-controller.service";
 import {catchError, Observable, throwError} from "rxjs";
-import {RecipeModel} from "../api/cookbook/models/recipe-model";
 import {IngredientModel} from "../api/cookbook/models/ingredient-model";
 
 @Injectable({
@@ -13,14 +12,14 @@ export class IngredientService {
   constructor(private httpClient: HttpClient, private ingredientController: IngredientControllerService) {
   }
 
-  findIngredients(searchString: string): Observable<RecipeModel[]> {
+  findIngredients(searchString: string): Observable<IngredientModel[]> {
     return this.ingredientController.findAllIngredients({searchString: searchString})
       .pipe(
         catchError(IngredientService.handleError)
       );
   }
 
-  loadIngredient(ingredientId: number): Observable<RecipeModel> {
+  loadIngredient(ingredientId: number): Observable<IngredientModel> {
     return this.ingredientController.findIngredientById({id: ingredientId})
       .pipe(
         catchError(IngredientService.handleError)
@@ -48,8 +47,6 @@ export class IngredientService {
     return throwError(
       () => 'Something bad happened; please try again later.');
   }
-
-
 
 
 }

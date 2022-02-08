@@ -34,6 +34,7 @@ import {RecipeListComponent} from "./components/recipe/recipe-list/recipe-list.c
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -50,27 +51,28 @@ import {MatSortModule} from "@angular/material/sort";
     IngredientDetailsComponent,
     IngredientListComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    CookbookApiModule.forRoot({rootUrl: environment.endpointBaseUri}),
-    MatCardModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FlexLayoutModule,
-    MatSidenavModule,
-    RoutingModule,
-    MatListModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        CookbookApiModule.forRoot({rootUrl: environment.endpointBaseUri}),
+        MatCardModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FlexLayoutModule,
+        MatSidenavModule,
+        RoutingModule,
+        MatListModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatAutocompleteModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
