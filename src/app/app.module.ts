@@ -18,7 +18,7 @@ import {ApiModule as CookbookApiModule} from "./api/cookbook/api.module";
 import {AppComponent} from './app.component';
 import {LayoutComponent} from './layout/layout.component';
 import {RoutingModule} from "./routing/routing.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {HttpClientModule} from "@angular/common/http";
 import {NavToolbarComponent} from "./components/nav-toolbar/nav-toolbar.component";
@@ -71,7 +71,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        FormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

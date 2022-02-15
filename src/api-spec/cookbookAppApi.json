@@ -11,6 +11,47 @@
     }
   ],
   "paths": {
+    "/recipe/{recipeId}/step": {
+      "put": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "addStep",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StepModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/{id}": {
       "get": {
         "tags": [
@@ -204,6 +245,143 @@
                 "schema": {
                   "type": "integer",
                   "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/step/{stepId}": {
+      "post": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "updateStep",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StepModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "removeStep",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stepId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/step/switch": {
+      "post": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "switchSteps",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stepA",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stepB",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeModel"
                 }
               }
             }
@@ -504,6 +682,26 @@
   },
   "components": {
     "schemas": {
+      "StepModel": {
+        "required": [
+          "description",
+          "stepCounter"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "stepCounter": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "IngredientModel": {
         "required": [
           "measurementType",
@@ -567,6 +765,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RecipeIngredientModel"
+            }
+          },
+          "steps": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StepModel"
             }
           }
         }

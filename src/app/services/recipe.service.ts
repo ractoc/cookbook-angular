@@ -3,6 +3,7 @@ import {catchError, Observable, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {RecipeControllerService} from "../api/cookbook/services/recipe-controller.service";
 import {RecipeModel} from "../api/cookbook/models/recipe-model";
+import {StepModel} from "../api/cookbook/models/step-model";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,29 @@ export class RecipeService {
       .pipe(
         catchError(RecipeService.handleError)
       );
+  }
+
+  saveStep(recipeId: number, step: StepModel): Observable<RecipeModel> {
+    if (step.id) {
+      const requestParams = {
+        recipeId: recipeId,
+        stepId: step.id,
+        body: step
+      };
+      return this.recipeController.updateStep(requestParams)
+        .pipe(
+          catchError(RecipeService.handleError)
+        );
+    } else {
+      const requestParams = {
+        recipeId: recipeId,
+        body: step
+      };
+      return this.recipeController.addStep(requestParams)
+        .pipe(
+          catchError(RecipeService.handleError)
+        );
+    }
   }
 
   uploadImage(recipeId: number, imageFile: File): Observable<RecipeModel> {

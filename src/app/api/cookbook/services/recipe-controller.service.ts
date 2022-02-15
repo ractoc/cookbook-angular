@@ -11,6 +11,7 @@ import { map, filter } from 'rxjs/operators';
 
 import { RecipeModel } from '../models/recipe-model';
 import { SimpleRecipeModel } from '../models/simple-recipe-model';
+import { StepModel } from '../models/step-model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,55 @@ export class RecipeControllerService extends BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * Path part for operation addStep
+   */
+  static readonly AddStepPath = '/recipe/{recipeId}/step';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `addStep()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  addStep$Response(params: {
+    recipeId: number;
+    body: StepModel
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.AddStepPath, 'put');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `addStep$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  addStep(params: {
+    recipeId: number;
+    body: StepModel
+  }): Observable<RecipeModel> {
+
+    return this.addStep$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
   }
 
   /**
@@ -161,6 +211,159 @@ export class RecipeControllerService extends BaseService {
 
     return this.deleteRecipe$Response(params).pipe(
       map((r: StrictHttpResponse<number>) => r.body as number)
+    );
+  }
+
+  /**
+   * Path part for operation updateStep
+   */
+  static readonly UpdateStepPath = '/recipe/{recipeId}/step/{stepId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `updateStep()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  updateStep$Response(params: {
+    recipeId: number;
+    stepId: number;
+    body: StepModel
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.UpdateStepPath, 'post');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.path('stepId', params.stepId, {});
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `updateStep$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  updateStep(params: {
+    recipeId: number;
+    stepId: number;
+    body: StepModel
+  }): Observable<RecipeModel> {
+
+    return this.updateStep$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
+   * Path part for operation removeStep
+   */
+  static readonly RemoveStepPath = '/recipe/{recipeId}/step/{stepId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `removeStep()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeStep$Response(params: {
+    recipeId: number;
+    stepId: number;
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.RemoveStepPath, 'delete');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.path('stepId', params.stepId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `removeStep$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  removeStep(params: {
+    recipeId: number;
+    stepId: number;
+  }): Observable<RecipeModel> {
+
+    return this.removeStep$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
+    );
+  }
+
+  /**
+   * Path part for operation switchSteps
+   */
+  static readonly SwitchStepsPath = '/recipe/{recipeId}/step/switch';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `switchSteps()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  switchSteps$Response(params: {
+    recipeId: number;
+    stepA: number;
+    stepB: number;
+  }): Observable<StrictHttpResponse<RecipeModel>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.SwitchStepsPath, 'post');
+    if (params) {
+      rb.path('recipeId', params.recipeId, {});
+      rb.query('stepA', params.stepA, {});
+      rb.query('stepB', params.stepB, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<RecipeModel>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `switchSteps$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  switchSteps(params: {
+    recipeId: number;
+    stepA: number;
+    stepB: number;
+  }): Observable<RecipeModel> {
+
+    return this.switchSteps$Response(params).pipe(
+      map((r: StrictHttpResponse<RecipeModel>) => r.body as RecipeModel)
     );
   }
 

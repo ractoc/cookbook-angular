@@ -9,6 +9,7 @@ import {MatTable} from "@angular/material/table";
 import {IngredientModel} from "../../../api/cookbook/models/ingredient-model";
 import {IngredientService} from "../../../services/ingredient.service";
 import {map} from "rxjs/operators";
+import {StepModel} from "../../../api/cookbook/models/step-model";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -22,9 +23,14 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   ingredients: RecipeIngredientModel[] = [];
   ingredientsList: IngredientModel[] = [];
   filteredIngredients: Observable<IngredientModel[]> | undefined;
+  steps: StepModel[] = [];
+  stepToEdit: StepModel = {description: '', stepCounter: 0};
 
   @ViewChild(MatTable) ingredientTable!: MatTable<IngredientModel>;
-  displayedColumns: string[] = ['name', 'amount', 'actions'];
+  displayedIngredientColumns: string[] = ['name', 'amount', 'actions'];
+
+  @ViewChild(MatTable) stepsTable!: MatTable<StepModel>;
+  displayedStepsColumns: string[] = ['description', 'actions'];
 
   private routeListener$: Subscription | undefined;
 
@@ -40,7 +46,6 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     image: new FormControl(),
   });
 
-
   ingredientForm = new FormGroup({
       ingredient: new FormControl(),
       amount: new FormControl(null, [
@@ -55,12 +60,29 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
       this.parent.recipe = recipeData;
       this.parent.initRecipeForm();
       this.parent.initIngredientForm();
+      this.parent.initStepForm();
       if (recipeData.recipeIngredients) {
         this.parent.ingredients = recipeData.recipeIngredients;
         if (this.parent.ingredients && this.parent.ingredients.length > 0 && this.parent.ingredientTable) {
           this.parent.ingredientTable.renderRows();
         }
       }
+      if (recipeData.steps) {
+        this.parent.steps = recipeData.steps.sort((stepA, stepB) => stepA.stepCounter - stepB.stepCounter);
+        if (this.parent.steps && this.parent.steps.length > 0 && this.parent.stepsTable) {
+          this.parent.stepsTable.renderRows();
+        }
+        if (this.parent.steps && this.parent.steps.length > 0) {
+          this.parent.stepToEdit = {description: '', stepCounter: this.parent.steps.length + 1};
+        } else {
+          this.parent.stepToEdit = {description: '', stepCounter: 1};
+        }
+        console.log('stepToEdit', this.parent.stepToEdit)
+      }
+      this.parent.steps.push({
+        description: '',
+        stepCounter: this.parent.steps.length + 1
+      } as StepModel)
     },
     error(error: any) {
       // TODO Implement error handling
@@ -155,6 +177,12 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  private initStepForm() {
+    if (this.recipe) {
+      this.stepToEdit = {description: '', stepCounter: this.steps.length}
+    }
+  }
+
   getImageUrl(recipe: RecipeModel) {
     return this.recipeService.getImageUrl(recipe);
   }
@@ -202,5 +230,31 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
 
   displayIngredient(ingredient: IngredientModel): string {
     return ingredient && ingredient.name ? ingredient.name : '';
+  }
+
+  saveStep(step: StepModel) {
+    console.log('saving a step', step)
+    if (this.recipe && this.recipe.id && step.description) {
+      this.recipeService.saveStep(this.recipe.id, step)
+        .subscribe(this.recipeObserver);
+    }
+    this.initStepForm();
+  }
+
+  editStep(step: StepModel) {
+    console.log('editing step', step)
+    this.stepToEdit = step;
+  }
+
+  removeStep(step: StepModel) {
+
+  }
+
+  stepDown(step: StepModel) {
+
+  }
+
+  stepUp(step: StepModel) {
+
   }
 }
