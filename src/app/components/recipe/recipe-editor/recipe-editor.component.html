@@ -37,7 +37,7 @@
     </div>
   </div>
   <!-- add new ingredient -->
-  <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
+  <div fxLayout="row" fxFlexAlign="left" *ngIf="recipe && recipe.id">
     <form class="form" [formGroup]="ingredientForm">
       <mat-form-field appearance="fill">
         <mat-label>Add Ingredient</mat-label>
@@ -92,15 +92,15 @@
   </div>
   <!-- diplay current steps -->
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
-    <table mat-table [dataSource]="steps"  *ngIf="steps && steps.length">
+    <table mat-table [dataSource]="steps" class="mat-elevation-z8" *ngIf="steps && steps.length">
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description</th>
-        <td mat-cell *matCellDef="let element">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element" style="width: 500px">
           <div *ngIf="element.id && element.stepCounter !== stepToEdit.stepCounter">
             {{element.description}}
           </div>
           <div *ngIf="element.stepCounter === stepToEdit.stepCounter">
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" class="recipeDescription">
               <mat-label>Description</mat-label>
               <textarea matInput [(ngModel)]="stepToEdit.description"></textarea>
             </mat-form-field>
@@ -109,7 +109,7 @@
       </ng-container>
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" fxLayout="row">
+        <td mat-cell *matCellDef="let element" fxLayout="row" style="height: 100%">
           <button aria-label="edit step" (click)="editStep(element)"
                   *ngIf="element.id && element.stepCounter !== stepToEdit.stepCounter">
             <mat-icon fxFlex="10%">mode_edit</mat-icon>

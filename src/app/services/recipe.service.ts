@@ -36,8 +36,8 @@ export class RecipeService {
 
   addIngredient(recipeId: number, ingredientId: number, amount: number): Observable<RecipeModel> {
     const requestParams = {
-      recipeId: recipeId,
-      ingredientId: ingredientId,
+      recipeId,
+      ingredientId,
       amount
     }
     return this.recipeController.addOrUpdateIngredient(requestParams)
@@ -48,8 +48,8 @@ export class RecipeService {
 
   removeIngredient(recipeId: number, ingredientId: number): Observable<RecipeModel> {
     const requestParams = {
-      recipeId: recipeId,
-      ingredientId: ingredientId
+      recipeId,
+      ingredientId
     }
     return this.recipeController.removeIngredient(requestParams)
       .pipe(
@@ -60,7 +60,7 @@ export class RecipeService {
   saveStep(recipeId: number, step: StepModel): Observable<RecipeModel> {
     if (step.id) {
       const requestParams = {
-        recipeId: recipeId,
+        recipeId,
         stepId: step.id,
         body: step
       };
@@ -78,6 +78,20 @@ export class RecipeService {
           catchError(RecipeService.handleError)
         );
     }
+  }
+
+  switchSteps(recipeId: number, stepA: number, stepB: number) {
+    return this.recipeController.switchSteps({recipeId, stepA, stepB})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
+  removeStep(recipeId: number, stepId: number) {
+    return this.recipeController.removeStep({recipeId, stepId})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
   }
 
   uploadImage(recipeId: number, imageFile: File): Observable<RecipeModel> {

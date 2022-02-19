@@ -77,7 +77,6 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
         } else {
           this.parent.stepToEdit = {description: '', stepCounter: 1};
         }
-        console.log('stepToEdit', this.parent.stepToEdit)
       }
       this.parent.steps.push({
         description: '',
@@ -149,6 +148,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
       id: this.recipeForm.value.id,
       name: this.recipeForm.value.name,
       description: this.recipeForm.value.description,
+      imageFileName: this.recipe?.imageFileName
     }).subscribe(this.recipeObserver);
   }
 
@@ -188,7 +188,6 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   }
 
   editIngredient(recipeIngredient: RecipeIngredientModel) {
-    console.log('editing recipeIngredient', recipeIngredient);
     this.ingredientForm.controls['ingredient'].setValue(recipeIngredient.ingredient);
     this.ingredientForm.controls['amount'].setValue(recipeIngredient.amount);
   }
@@ -219,7 +218,6 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   }
 
   private filterIngredients(value: any): IngredientModel[] {
-    console.log('filtering', value);
     if (value) {
       const filterValue = typeof value === 'string' ? value.toLowerCase() : value.name.toLowerCase();
       return this.ingredientsList.filter((option: IngredientModel) => option.name.toLowerCase().includes(filterValue));
@@ -233,7 +231,6 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   }
 
   saveStep(step: StepModel) {
-    console.log('saving a step', step)
     if (this.recipe && this.recipe.id && step.description) {
       this.recipeService.saveStep(this.recipe.id, step)
         .subscribe(this.recipeObserver);
@@ -242,19 +239,42 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
   }
 
   editStep(step: StepModel) {
-    console.log('editing step', step)
     this.stepToEdit = step;
   }
 
   removeStep(step: StepModel) {
-
+    console.log('removeStep', step);
+    if (this.recipe && this.recipe.id && step.id) {
+      this.recipeService.removeStep(this.recipe.id, step.id)
+        .subscribe(this.recipeObserver);
+    }
+    this.initStepForm();
   }
 
   stepDown(step: StepModel) {
-
+    console.log('stepDown', step);
+    const stepIndex = this.steps.indexOf(step);
+    console.log('stepDown', stepIndex);
+    const stepA = step.id;
+    console.log('stepDown', stepA);
+    const stepB = this.steps[stepIndex + 1].id;
+    console.log('stepDown', stepB);
+    if (this.recipe && this.recipe.id && stepA && stepB) {
+      this.recipeService.switchSteps(this.recipe.id, stepA, stepB)
+        .subscribe(this.recipeObserver);
+    }
+    this.initStepForm();
   }
 
   stepUp(step: StepModel) {
-
+    console.log('stepUp', step);
+    const stepIndex = this.steps.indexOf(step);
+    const stepA = step.id;
+    const stepB = this.steps[stepIndex - 1].id;
+    if (this.recipe && this.recipe.id && stepA && stepB) {
+      this.recipeService.switchSteps(this.recipe.id, stepA, stepB)
+        .subscribe(this.recipeObserver);
+    }
+    this.initStepForm();
   }
 }

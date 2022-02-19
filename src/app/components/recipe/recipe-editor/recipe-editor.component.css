@@ -30,3 +30,17 @@
 .mat-column-amount, .mat-column-actions {
   padding-left: 16px;
 }
+
+.content {
+  margin-bottom: 25px;
+}
+
+.recipeDescription {
+  height: 250px;
+  width: 100%;
+}
+
+.recipeDescription textarea {
+  height: 200px;
+  width: 100%;
+}
