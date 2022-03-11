@@ -12,11 +12,12 @@ pipeline {
     stage("Deploy Application"){
       steps{
         echo 'make sure there is always something to clean'
+        sh 'whoami'
         sh 'touch /var/www/html/test.txt'
         echo 'cleanup previous install'
         sh "rm -R /var/www/html/* 1>/dev/null 2>&1"
         echo 'new install'
-        sh "cp dist/* /var/www/html"
+        sh "cp -r dist/cookbook-angular/* /var/www/html"
       }
     }
 
