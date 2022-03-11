@@ -35,6 +35,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
         MatPaginatorModule,
         MatSortModule,
         MatAutocompleteModule,
-        FormsModule
+        FormsModule,
+        MatTabsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

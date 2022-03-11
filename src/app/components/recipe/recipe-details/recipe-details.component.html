@@ -1,1 +1,75 @@
-<p>recipe-details works!</p>
+<section fxLayout="column" fxFlexAlign="stretch">
+  <mat-card class="card-picture" *ngIf="recipe">
+    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+      <span fxFlex="80%">{{recipe.name}}</span>
+      <button aria-label="edit recipe" [routerLink]="'/recipe/edit/' + recipe.id">
+        <mat-icon fxFlex="10%">mode_edit</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-card-content fxLayout="row" fxLayout.xs="column">
+      <div>
+        <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
+             [src]="this.getImageUrl(recipe)"/>
+      </div>
+      <div *ngIf="recipe.description">
+        {{recipe.description}}
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Ingredients">
+      <div class="ingredients">
+        <div fxLayout="row" fxFlexFill
+             fxLayoutAlign="left center">
+          <div style="width: 250px">
+            Number of people:
+          </div>
+          <div style="width: 100px">
+            {{ numberOfPeople }}
+          </div>
+          <div>
+            <button mat-mini-fab color="primary" aria-label="Add One Person" (click)="addPerson()">
+              <mat-icon>person_add</mat-icon>
+            </button>
+            &nbsp;
+            <button mat-mini-fab color="primary" aria-label="Substract One Person" (click)="substractPerson()">
+              <mat-icon>person_remove</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <table mat-table [dataSource]="ingredients" class="mat-elevation-z8" *ngIf="ingredients && ingredients.length">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name</th>
+            <td mat-cell *matCellDef="let element" style="width: 500px"> {{element.ingredient.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount</th>
+            <td mat-cell *matCellDef="let element" style="width: 100px"> {{element.amount}} {{element.ingredient.measurementType}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedIngredientColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedIngredientColumns;"></tr>
+        </table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Steps">
+      <table mat-table [dataSource]="recipe.steps" class="mat-elevation-z8"
+             *ngIf="recipe && recipe.steps && recipe.steps.length">
+        <ng-container matColumnDef="step">
+          <th mat-header-cell *matHeaderCellDef> Step</th>
+          <td mat-cell *matCellDef="let element" style="width: 100px">
+            {{element.stepCounter}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description</th>
+          <td mat-cell *matCellDef="let element" style="width: 500px">
+            {{element.description}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedStepsColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedStepsColumns;"></tr>
+      </table>
+    </mat-tab>
+  </mat-tab-group>
+</section>
