@@ -2,3 +2,13 @@
   min-height:100vh;
   height: auto;
 }
+
+.recipe-image:first-child {
+  margin-top: 0;
+}
+
+.recipe-image {
+  margin: 0 15px 0 0;
+  width: 240px;
+  height: 240px;
+}

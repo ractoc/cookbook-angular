@@ -9,7 +9,7 @@
     <mat-card-content fxLayout="row" fxLayout.xs="column">
       <div>
         <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
-             [src]="this.getImageUrl(recipe)"/>
+             class="recipe-image" [src]="this.getImageUrl(recipe)"/>
       </div>
       <div *ngIf="recipe.description">
         {{recipe.description}}
