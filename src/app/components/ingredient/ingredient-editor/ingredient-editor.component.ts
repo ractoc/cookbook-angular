@@ -15,6 +15,8 @@ export class IngredientEditorComponent implements OnInit, OnDestroy {
   subTitle: String | undefined;
   ingredient: IngredientModel | undefined;
 
+  saving = false;
+
   // TODO load list from server
   measurementTypes = [
     'GRAM',
@@ -39,13 +41,19 @@ export class IngredientEditorComponent implements OnInit, OnDestroy {
   ingredientObserver = {
     parent: this,
     next(ingredientData: IngredientModel) {
-      this.parent.subTitle = 'Update Ingredient';
-      this.parent.ingredient = ingredientData;
-      this.parent.initIngredientForm();
+      console.log('saving', this.parent.saving);
+      if (this.parent.saving) {
+        this.parent.router.navigateByUrl('/ingredients');
+      } else {
+        this.parent.subTitle = 'Update Ingredient';
+        this.parent.ingredient = ingredientData;
+        this.parent.initIngredientForm();
+      }
     },
     error(error: any) {
       // TODO Implement error handling
       console.error('error', error);
+      this.parent.saving = false;
     },
     complete() {
     }
@@ -61,6 +69,7 @@ export class IngredientEditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeListener$ = this.route.params
       .subscribe((params: any) => {
+        console.log('loading ingredient', params.id);
           if (params.id) {
             this.loadIngredient(params.id);
             this.subTitle = 'Update Ingredient';
@@ -85,6 +94,7 @@ export class IngredientEditorComponent implements OnInit, OnDestroy {
   }
 
   saveIngredient() {
+    this.saving = true;
     this.ingredientService.saveIngredient(this.ingredientForm.value).subscribe(this.ingredientObserver);
   }
 
