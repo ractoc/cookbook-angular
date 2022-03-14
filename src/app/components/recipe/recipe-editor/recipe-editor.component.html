@@ -25,7 +25,7 @@
   </div>
   <!-- upload image -->
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
-    <img [alt]="recipe.imageFileName" src="{{this.getImageUrl(recipe)}}" *ngIf="recipe && recipe.imageFileName"/>
+    <img [alt]="recipe.imageFileName" class="recipe-image" src="{{this.getImageUrl(recipe)}}" *ngIf="recipe && recipe.imageFileName"/>
     <input type="file" class="file-input"
            (change)="onFileSelected($event)" #fileUpload>
     <div class="file-upload">
