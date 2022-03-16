@@ -614,6 +614,52 @@ export class RecipeControllerService extends BaseService {
   }
 
   /**
+   * Path part for operation findAllRecipesForIngredientId
+   */
+  static readonly FindAllRecipesForIngredientIdPath = '/recipe/ingredient/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findAllRecipesForIngredientId()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findAllRecipesForIngredientId$Response(params: {
+    id: number;
+  }): Observable<StrictHttpResponse<Array<SimpleRecipeModel>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.FindAllRecipesForIngredientIdPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<SimpleRecipeModel>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `findAllRecipesForIngredientId$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findAllRecipesForIngredientId(params: {
+    id: number;
+  }): Observable<Array<SimpleRecipeModel>> {
+
+    return this.findAllRecipesForIngredientId$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<SimpleRecipeModel>>) => r.body as Array<SimpleRecipeModel>)
+    );
+  }
+
+  /**
    * Path part for operation downloadFile
    */
   static readonly DownloadFilePath = '/recipe/downloadImage/{fileName}';

@@ -24,7 +24,10 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button aria-label="edit recipe" [routerLink]="'/ingredient/edit/' + element.id">
+        <button aria-label="ingredient details" [routerLink]="'/ingredient/details/' + element.id"  *ngIf="element.inUse">
+          <mat-icon fxFlex="10%">food_bank</mat-icon>
+        </button>
+        <button aria-label="edit ingredient" [routerLink]="'/ingredient/edit/' + element.id"  *ngIf="!element.inUse">
           <mat-icon fxFlex="10%">mode_edit</mat-icon>
         </button>
       </td>

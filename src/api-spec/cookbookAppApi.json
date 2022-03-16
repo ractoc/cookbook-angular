@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080/api",
+      "url": "http://localhost:9090/api",
       "description": "Generated server url"
     }
   ],
@@ -648,6 +648,40 @@
         }
       }
     },
+    "/recipe/ingredient/{id}": {
+      "get": {
+        "tags": [
+          "recipe-controller"
+        ],
+        "operationId": "findAllRecipesForIngredientId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SimpleRecipeModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/recipe/downloadImage/{fileName}": {
       "get": {
         "tags": [
@@ -729,6 +763,9 @@
           "amount": {
             "type": "integer",
             "format": "int32"
+          },
+          "inUse": {
+            "type": "boolean"
           }
         }
       },

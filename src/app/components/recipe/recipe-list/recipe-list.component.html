@@ -12,7 +12,7 @@
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
     <mat-card class="card-picture" *ngFor="let recipe of recipes">
-      <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+      <mat-card-title>
         <span fxFlex="80%">{{recipe.name}}</span>
         <button aria-label="view details" [routerLink]="'/recipe/details/' + recipe.id">
           <mat-icon fxFlex="10%">food_bank</mat-icon>
@@ -28,7 +28,7 @@
                class="recipe-image"
                [src]="this.getImageUrl(recipe)"/>
         </div>
-        <div *ngIf="recipe.description">
+        <div *ngIf="recipe.description" fxHide.lt-lg>
           {{recipe.description}}
         </div>
       </mat-card-content>

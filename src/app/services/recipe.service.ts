@@ -20,6 +20,13 @@ export class RecipeService {
       );
   }
 
+  findRecipesForIngredient(ingredientId: number): Observable<RecipeModel[]> {
+    return this.recipeController.findAllRecipesForIngredientId({id: ingredientId})
+      .pipe(
+        catchError(RecipeService.handleError)
+      );
+  }
+
   loadRecipe(recipeId: number): Observable<RecipeModel> {
     return this.recipeController.findRecipeById({id: recipeId})
       .pipe(
