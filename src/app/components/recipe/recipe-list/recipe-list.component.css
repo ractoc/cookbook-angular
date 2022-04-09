@@ -21,3 +21,11 @@
 .recipe-image:first-child {
   margin-top: 0;
 }
+.content > mat-card {
+  width: 240px;
+}
+.content > mat-card > mat-card-title {
+  height: 60px;
+}
+
+

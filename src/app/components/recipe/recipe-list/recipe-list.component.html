@@ -10,24 +10,15 @@
     </div>
   </form>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-    <mat-card class="card-picture" *ngFor="let recipe of recipes">
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center" class="content">
+    <mat-card class="card-picture" [routerLink]="'/recipe/details/' + recipe.id" *ngFor="let recipe of recipes">
       <mat-card-title>
         <span fxFlex="80%">{{recipe.name}}</span>
-        <button aria-label="view details" [routerLink]="'/recipe/details/' + recipe.id">
-          <mat-icon fxFlex="10%">food_bank</mat-icon>
-        </button>
-        <button aria-label="edit recipe" [routerLink]="'/recipe/edit/' + recipe.id">
-          <mat-icon fxFlex="10%">mode_edit</mat-icon>
-        </button>
-        <!--        <mat-icon fxFlex="10%">delete</mat-icon>-->
       </mat-card-title>
-      <mat-card-content fxLayout="row" fxLayout.xs="column">
-        <div>
-          <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
-               class="recipe-image"
-               [src]="this.getImageUrl(recipe)"/>
-        </div>
+      <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
+           class="recipe-image"
+           [src]="this.getImageUrl(recipe)"/>
+      <mat-card-content fxLayout="row">
         <div *ngIf="recipe.description" fxHide.lt-lg>
           {{recipe.description}}
         </div>
