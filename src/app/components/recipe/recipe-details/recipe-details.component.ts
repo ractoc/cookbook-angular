@@ -88,4 +88,13 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  displayMeasurementType(ingredient: any) {
+    switch (ingredient.measurementType) {
+      case 'PIECE':
+        return 'stuks';
+      default:
+        return 'gram';
+    }
+  }
 }

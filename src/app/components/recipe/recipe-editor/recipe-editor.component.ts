@@ -277,4 +277,13 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     }
     this.initStepForm();
   }
+
+  displayMeasurementType(ingredient: any) {
+    switch (ingredient.measurementType) {
+      case 'PIECE':
+        return 'stuks';
+      default:
+        return 'gram';
+    }
+  }
 }
