@@ -7,6 +7,7 @@ export interface RecipeModel {
   id?: number;
   imageFileName?: string;
   name?: string;
+  recipeCategory?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
   recipeIngredients?: Array<RecipeIngredientModel>;
   steps?: Array<StepModel>;
 }

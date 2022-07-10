@@ -536,9 +536,23 @@
           {
             "name": "searchString",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "searchCategory",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BREAKFAST",
+                "LUNCH",
+                "DINNER",
+                "SNACK"
+              ]
             }
           }
         ],
@@ -797,6 +811,15 @@
           "imageFileName": {
             "type": "string"
           },
+          "recipeCategory": {
+            "type": "string",
+            "enum": [
+              "BREAKFAST",
+              "LUNCH",
+              "DINNER",
+              "SNACK"
+            ]
+          },
           "recipeIngredients": {
             "uniqueItems": true,
             "type": "array",
@@ -825,6 +848,15 @@
           },
           "description": {
             "type": "string"
+          },
+          "recipeCategory": {
+            "type": "string",
+            "enum": [
+              "BREAKFAST",
+              "LUNCH",
+              "DINNER",
+              "SNACK"
+            ]
           },
           "imageFileName": {
             "type": "string"

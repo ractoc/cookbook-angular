@@ -2,28 +2,26 @@
   <form class="form" [formGroup]="searchForm">
     <div class="container" fxLayout="row" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
       <mat-form-field class="search-form">
-        <input matInput placeholder="Search Picture" formControlName="searchString" type="text">
+        <input matInput placeholder="Zoek recept" formControlName="searchString" type="text">
       </mat-form-field>
-      <button mat-raised-button color="primary" [disabled]="searchDisabled()" (click)="searchRecipes()">
-        Search
+      <mat-form-field class="search-form">
+        <mat-label>Selecteer een categorie</mat-label>
+        <mat-select formControlName="searchCategory">
+          <mat-option>Geen</mat-option>
+          <mat-option value="BREAKFAST">Ontbijt</mat-option>
+          <mat-option value="LUNCH">Lunch</mat-option>
+          <mat-option value="DINNER">Diner</mat-option>
+          <mat-option value="SNACK">Tussendoortje</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="searchRecipes()">
+        Zoek
       </button>
     </div>
   </form>
 
   <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center" class="content">
-    <mat-card class="card-picture" [routerLink]="'/recipe/details/' + recipe.id" *ngFor="let recipe of recipes">
-      <mat-card-title>
-        <span fxFlex="80%">{{recipe.name}}</span>
-      </mat-card-title>
-      <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
-           class="recipe-image"
-           [src]="this.getImageUrl(recipe)"/>
-      <mat-card-content fxLayout="row">
-        <div *ngIf="recipe.description" fxHide.lt-lg>
-          {{recipe.description}}
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <app-recipe-card [recipe]="recipe" [routerLink]="'/recipe/details/' + recipe.id" *ngFor="let recipe of recipes"></app-recipe-card>
   </div>
 </section>
 

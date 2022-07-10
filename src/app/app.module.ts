@@ -36,6 +36,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatSelectModule} from "@angular/material/select";
+import { RecipeCardComponent } from './components/recipe/recipe-card/recipe-card.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     IngredientEditorComponent,
     IngredientDetailsComponent,
     IngredientListComponent,
+    RecipeCardComponent,
   ],
     imports: [
         BrowserModule,
@@ -74,7 +77,8 @@ import {MatTabsModule} from "@angular/material/tabs";
         MatSortModule,
         MatAutocompleteModule,
         FormsModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSelectModule
     ],
   providers: [],
   bootstrap: [AppComponent]

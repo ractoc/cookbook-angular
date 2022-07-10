@@ -1,28 +1,12 @@
 <section fxLayout="column" fxFlexAlign="stretch">
-  <mat-card class="card-picture" *ngIf="recipe">
-    <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-      <span fxFlex="80%">{{recipe.name}}</span>
-      <button aria-label="edit recipe" [routerLink]="'/recipe/edit/' + recipe.id">
-        <mat-icon fxFlex="10%">mode_edit</mat-icon>
-      </button>
-    </mat-card-title>
-    <mat-card-content fxLayout="row" fxLayout.xs="column">
-      <div>
-        <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
-             class="recipe-image" [src]="this.getImageUrl(recipe)"/>
-      </div>
-      <div *ngIf="recipe.description">
-        {{recipe.description}}
-      </div>
-    </mat-card-content>
-  </mat-card>
+  <app-recipe-card [recipe]="recipe" *ngIf="recipe"></app-recipe-card>
   <mat-tab-group animationDuration="0ms">
-    <mat-tab label="Ingredients">
+    <mat-tab label="Ingredienten">
       <div class="ingredients">
         <div fxLayout="row" fxFlexFill
              fxLayoutAlign="left center">
           <div style="width: 250px">
-            Number of people:
+            Aantal personen:
           </div>
           <div style="width: 100px">
             {{ numberOfPeople }}
@@ -40,11 +24,11 @@
         <mat-divider></mat-divider>
         <table mat-table [dataSource]="ingredients" class="mat-elevation-z8" *ngIf="ingredients && ingredients.length">
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name</th>
+            <th mat-header-cell *matHeaderCellDef>Naam</th>
             <td mat-cell *matCellDef="let element" style="width: 500px"> {{element.ingredient.name}} </td>
           </ng-container>
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef> Amount</th>
+            <th mat-header-cell *matHeaderCellDef>Hoeveelheid</th>
             <td mat-cell *matCellDef="let element" style="width: 100px"> {{element.amount}} {{displayMeasurementType(element.ingredient)}} </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedIngredientColumns"></tr>
@@ -52,7 +36,7 @@
         </table>
       </div>
     </mat-tab>
-    <mat-tab label="Steps">
+    <mat-tab label="Stappen">
       <table mat-table [dataSource]="recipe.steps" class="mat-elevation-z8"
              *ngIf="recipe && recipe.steps && recipe.steps.length">
         <ng-container matColumnDef="step">
@@ -62,7 +46,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> Description</th>
+          <th mat-header-cell *matHeaderCellDef> Omschrijving</th>
           <td mat-cell *matCellDef="let element" style="width: 500px">
             {{element.description}}
           </td>

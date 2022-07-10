@@ -13,8 +13,9 @@ export class RecipeService {
   constructor(private httpClient: HttpClient, private recipeController: RecipeControllerService) {
   }
 
-  findRecipes(searchString: string): Observable<RecipeModel[]> {
-    return this.recipeController.findAllRecipes({searchString: searchString})
+  findRecipes(searchString: string, searchCategory?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK'): Observable<RecipeModel[]> {
+    console.log("findRecipes:", {searchString: searchString, searchCategory: searchCategory});
+    return this.recipeController.findAllRecipes({searchString: searchString, searchCategory: searchCategory})
       .pipe(
         catchError(RecipeService.handleError)
       );

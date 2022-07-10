@@ -1,0 +1,20 @@
+<mat-card class="card-picture" *ngIf="recipe">
+  <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+    <span fxFlex="80%">{{recipe.name}}</span>
+    <button aria-label="edit recipe" [routerLink]="'/recipe/edit/' + recipe.id">
+      <mat-icon fxFlex="10%">mode_edit</mat-icon>
+    </button>
+  </mat-card-title>
+  <mat-card-subtitle fxLayout.gt-xs="row" fxLayout.xs="column">
+    <span fxFlex="80%">Categorie: {{getCategory(recipe)}}</span>
+  </mat-card-subtitle>
+  <mat-card-content fxLayout="row" fxLayout.xs="column">
+    <div>
+      <img mat-card-xl-image *ngIf="recipe.imageFileName" alt="{{recipe.name}}" mat-card-image
+           class="recipe-image" [src]="this.getImageUrl(recipe)"/>
+    </div>
+    <div *ngIf="recipe.description">
+      {{recipe.description}}
+    </div>
+  </mat-card-content>
+</mat-card>

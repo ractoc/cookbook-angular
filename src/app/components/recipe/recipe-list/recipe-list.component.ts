@@ -14,6 +14,7 @@ export class RecipeListComponent implements OnInit {
 
   searchForm = new FormGroup({
     searchString: new FormControl(),
+    searchCategory: new FormControl()
   });
 
   recipeObserver = {
@@ -34,15 +35,16 @@ export class RecipeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.recipeService.findRecipes('').subscribe(this.recipeObserver);
+    this.recipeService
+      .findRecipes('')
+      .subscribe(this.recipeObserver);
   }
 
   searchRecipes() {
-    this.recipeService.findRecipes(this.searchForm.value.searchString.trim()).subscribe(this.recipeObserver);
-  }
-
-  searchDisabled() {
-    return !this.searchForm.value.searchString || this.searchForm.value.searchString.trim().length < 4;
+    this.recipeService
+      .findRecipes((this.searchForm.value.searchString) ? this.searchForm.value.searchString.trim() : undefined
+        , this.searchForm.value.searchCategory)
+      .subscribe(this.recipeObserver);
   }
 
   getImageUrl(recipe: RecipeModel) {

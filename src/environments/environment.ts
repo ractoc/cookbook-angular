@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  // endpointBaseUri: 'http://192.168.1.115:9090/api'
   endpointBaseUri: 'http://localhost:9090/api'
 };
 

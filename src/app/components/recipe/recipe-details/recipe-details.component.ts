@@ -85,6 +85,12 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         } else {
           return ingredient;
         }
+      }).sort((i1, i2) => {
+        if (i1.ingredient && i2.ingredient) {
+          return i1.ingredient.name.toUpperCase().localeCompare(i2.ingredient?.name.toUpperCase());
+        } else {
+          return 0;
+        }
       });
     }
   }
@@ -95,6 +101,20 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         return 'stuks';
       default:
         return 'gram';
+    }
+  }
+
+  getCategory(recipe: RecipeModel) {
+    if (recipe.recipeCategory == 'BREAKFAST') {
+      return "Ontbijt";
+    } else if (recipe.recipeCategory == 'LUNCH') {
+      return "Lunch";
+    } else if (recipe.recipeCategory == 'DINNER') {
+      return "Diner";
+    } else if (recipe.recipeCategory == 'SNACK') {
+      return "Tussendoortje";
+    } else {
+      return 'Onbekend';
     }
   }
 }

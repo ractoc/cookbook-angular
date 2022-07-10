@@ -4,14 +4,23 @@
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipeForm; else loading">
     <form class="form" [formGroup]="recipeForm">
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Name
+        <mat-label>Naam
           <mat-icon matSuffix>priority_high</mat-icon>
         </mat-label>
         <input matInput formControlName="name"/>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Description</mat-label>
+        <mat-label>Omschrijving</mat-label>
         <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Selecteer een categorie</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="BREAKFAST">Ontbijt</mat-option>
+          <mat-option value="LUNCH">Lunch</mat-option>
+          <mat-option value="DINNER">Diner</mat-option>
+          <mat-option value="SNACK">Tussendoortje</mat-option>
+        </mat-select>
       </mat-form-field>
       <div class="buttons">
         <button mat-stroked-button (click)="cancel()">
@@ -29,7 +38,7 @@
     <input type="file" class="file-input"
            (change)="onFileSelected($event)" #fileUpload>
     <div class="file-upload">
-      <span *ngIf="recipe && !recipe.imageFileName">No file selected yet.</span>
+      <span *ngIf="recipe && !recipe.imageFileName">Geen bestand geselecteerd.</span>
       <button mat-mini-fab color="primary" class="upload-btn"
               (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>
@@ -40,7 +49,7 @@
   <div fxLayout="row" fxFlexAlign="left" *ngIf="recipe && recipe.id">
     <form class="form" [formGroup]="ingredientForm">
       <mat-form-field appearance="fill">
-        <mat-label>Add Ingredient</mat-label>
+        <mat-label>Ingredient toevoegen</mat-label>
         <input type="text"
                matInput
                formControlName="ingredient"
@@ -68,11 +77,11 @@
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
     <table mat-table [dataSource]="ingredients" class="mat-elevation-z8" *ngIf="ingredients && ingredients.length">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <th mat-header-cell *matHeaderCellDef>Naam</th>
         <td mat-cell *matCellDef="let element"> {{element.ingredient.name}} </td>
       </ng-container>
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> Amount</th>
+        <th mat-header-cell *matHeaderCellDef>Hoeveelheid</th>
         <td mat-cell *matCellDef="let element"> {{element.amount}} {{displayMeasurementType(element.ingredient)}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">
@@ -94,14 +103,14 @@
   <div fxLayout="row" class="content" fxFlexAlign="left" *ngIf="recipe && recipe.id">
     <table mat-table [dataSource]="steps" class="mat-elevation-z8" *ngIf="steps && steps.length">
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <th mat-header-cell *matHeaderCellDef>Omschrijving</th>
         <td mat-cell *matCellDef="let element" style="width: 500px">
           <div *ngIf="element.id && element.stepCounter !== stepToEdit.stepCounter">
             {{element.description}}
           </div>
           <div *ngIf="element.stepCounter === stepToEdit.stepCounter">
             <mat-form-field appearance="fill" class="recipeDescription">
-              <mat-label>Description</mat-label>
+              <mat-label>Omschrijving</mat-label>
               <textarea matInput [(ngModel)]="stepToEdit.description"></textarea>
             </mat-form-field>
           </div>

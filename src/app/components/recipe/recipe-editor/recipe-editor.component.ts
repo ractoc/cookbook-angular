@@ -43,6 +43,9 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
     description: new FormControl(null, [
       Validators.minLength(25),
       Validators.maxLength(250)]),
+    category: new FormControl(null, [
+      Validators.required
+    ]),
     image: new FormControl(),
   });
 
@@ -148,6 +151,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
       id: this.recipeForm.value.id,
       name: this.recipeForm.value.name,
       description: this.recipeForm.value.description,
+      recipeCategory: this.recipeForm.value.category,
       imageFileName: this.recipe?.imageFileName
     }).subscribe(this.recipeObserver);
   }
@@ -168,6 +172,7 @@ export class RecipeEditorComponent implements OnInit, OnDestroy {
       this.recipeForm.controls['id'].setValue(this.recipe.id);
       this.recipeForm.controls['name'].setValue(this.recipe.name);
       this.recipeForm.controls['description'].setValue(this.recipe.description);
+      this.recipeForm.controls['category'].setValue(this.recipe.recipeCategory);
     }
   }
 

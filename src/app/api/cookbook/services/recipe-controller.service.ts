@@ -532,13 +532,15 @@ export class RecipeControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllRecipes$Response(params: {
-    searchString: string;
+  findAllRecipes$Response(params?: {
+    searchString?: string;
+    searchCategory?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
   }): Observable<StrictHttpResponse<Array<SimpleRecipeModel>>> {
 
     const rb = new RequestBuilder(this.rootUrl, RecipeControllerService.FindAllRecipesPath, 'get');
     if (params) {
       rb.query('searchString', params.searchString, {});
+      rb.query('searchCategory', params.searchCategory, {});
     }
 
     return this.http.request(rb.build({
@@ -558,8 +560,9 @@ export class RecipeControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  findAllRecipes(params: {
-    searchString: string;
+  findAllRecipes(params?: {
+    searchString?: string;
+    searchCategory?: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
   }): Observable<Array<SimpleRecipeModel>> {
 
     return this.findAllRecipes$Response(params).pipe(
